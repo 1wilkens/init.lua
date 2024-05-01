@@ -45,10 +45,14 @@ return {
             })
         })
 
-        -- setup lspconfig
+        -- setup servers
         local lspconfig = require("lspconfig")
-        lspconfig.rust_analyzer.setup({})
-        lspconfig.basedpyright.setup({})
+        lspconfig.rust_analyzer.setup({
+            capabilities = capabilities,
+        })
+        lspconfig.basedpyright.setup({
+            capabilities = capabilities,
+        })
 
         vim.diagnostic.config({
             -- update_in_insert = true,
