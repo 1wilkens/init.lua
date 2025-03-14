@@ -53,6 +53,9 @@ return {
         lspconfig.basedpyright.setup({
             capabilities = capabilities,
         })
+        lspconfig.ts_ls.setup({
+            capabilities = capabilities,
+        })
 
         vim.diagnostic.config({
             -- update_in_insert = true,
