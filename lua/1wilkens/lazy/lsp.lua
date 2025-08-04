@@ -14,12 +14,6 @@ return {
     config = function()
         -- setup cmp
         local cmp = require('cmp')
-        local cmp_lsp = require("cmp_nvim_lsp")
-        local capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities())
 
         -- setup fidget
         require("fidget").setup({})
@@ -45,28 +39,68 @@ return {
             })
         })
 
-        -- setup servers
-        local lspconfig = require("lspconfig")
-        lspconfig.rust_analyzer.setup({
-            capabilities = capabilities,
-        })
-        lspconfig.basedpyright.setup({
-            capabilities = capabilities,
-        })
-        lspconfig.ts_ls.setup({
-            capabilities = capabilities,
-        })
+        -- enable servers
+        vim.lsp.enable('bashls')
+        vim.lsp.enable('biome')
+        vim.lsp.enable('basedpyright')
+        vim.lsp.enable('dockerls')
+        vim.lsp.enable('gitlab_ci_ls')
+        vim.lsp.enable('gopls')
+        vim.lsp.enable('harper_ls')
+        vim.lsp.enable('lua_ls')
+        vim.lsp.enable('marksman')
+        vim.lsp.enable('nil_ls')
+        vim.lsp.enable('rust_analyzer')
+        vim.lsp.enable('systemd_ls')
 
+        -- configure diagnostics
         vim.diagnostic.config({
             -- update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",
                 border = "rounded",
-                source = "always",
+                --source = "always",
                 header = "",
                 prefix = "",
             },
+        })
+
+        -- configure servers
+
+        -- make lua_ls aware of neovims modules
+        vim.lsp.config('lua_ls', {
+            on_init = function(client)
+                if client.workspace_folders then
+                    local path = client.workspace_folders[1].name
+                    if
+                        path ~= vim.fn.stdpath('config')
+                        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+                    then
+                        return
+                    end
+                end
+
+                client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                    runtime = {
+                        version = 'LuaJIT',
+                        path = {
+                            'lua/?.lua',
+                            'lua/?/init.lua',
+                        },
+                    },
+                    -- Make the server aware of Neovim runtime files
+                    workspace = {
+                        checkThirdParty = false,
+                        library = {
+                            vim.env.VIMRUNTIME
+                        }
+                    }
+                })
+            end,
+            settings = {
+                Lua = {}
+            }
         })
     end
 }
