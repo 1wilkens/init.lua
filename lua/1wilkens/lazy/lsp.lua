@@ -18,11 +18,12 @@ return {
         -- setup fidget
         require("fidget").setup({})
 
+        -- setup completion
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    require('luasnip').lsp_expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({
@@ -34,8 +35,33 @@ return {
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
                 { name = 'path' },
-                { name = 'buffer' },
                 { name = 'luasnip' },
+            }, {
+                { name = 'buffer' },
+            })
+        })
+
+        -- setup cmdline (/, :)
+        cmp.setup.cmdline('/', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = {
+                { name = 'buffer' }
+            }
+        })
+
+        cmp.setup.cmdline(':', {
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({
+                { name = 'buffer' },
+                { name = 'path' },
+            },
+            {
+                {
+                    name = 'cmdline',
+                    option = {
+                        ignore_cmds = { 'Man', '!' }
+                    }
+                }
             })
         })
 
