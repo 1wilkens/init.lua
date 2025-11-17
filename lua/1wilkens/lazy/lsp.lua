@@ -13,7 +13,7 @@ return {
 
     config = function()
         -- setup cmp
-        local cmp = require('cmp')
+        local cmp = require("cmp")
 
         -- setup fidget
         require("fidget").setup({})
@@ -23,61 +23,60 @@ return {
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body)
+                    require("luasnip").lsp_expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
+                ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
+                ["<C-y>"] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete(),
             }),
             sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                { name = 'path' },
-                { name = 'luasnip' },
+                { name = "nvim_lsp" },
+                { name = "path" },
+                { name = "luasnip" },
             }, {
-                { name = 'buffer' },
-            })
+                { name = "buffer" },
+            }),
         })
 
         -- setup cmdline (/, :)
-        cmp.setup.cmdline('/', {
+        cmp.setup.cmdline("/", {
             mapping = cmp.mapping.preset.cmdline(),
             sources = {
-                { name = 'buffer' }
-            }
+                { name = "buffer" },
+            },
         })
 
-        cmp.setup.cmdline(':', {
+        cmp.setup.cmdline(":", {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources({
-                { name = 'buffer' },
-                { name = 'path' },
-            },
-            {
+                { name = "buffer" },
+                { name = "path" },
+            }, {
                 {
-                    name = 'cmdline',
+                    name = "cmdline",
                     option = {
-                        ignore_cmds = { 'Man', '!' }
-                    }
-                }
-            })
+                        ignore_cmds = { "Man", "!" },
+                    },
+                },
+            }),
         })
 
         -- enable servers
-        vim.lsp.enable('bashls')
-        vim.lsp.enable('biome')
-        vim.lsp.enable('basedpyright')
-        vim.lsp.enable('dockerls')
-        vim.lsp.enable('gitlab_ci_ls')
-        vim.lsp.enable('gopls')
-        vim.lsp.enable('harper_ls')
-        vim.lsp.enable('lua_ls')
-        vim.lsp.enable('marksman')
-        vim.lsp.enable('nil_ls')
-        vim.lsp.enable('rust_analyzer')
-        vim.lsp.enable('systemd_ls')
+        vim.lsp.enable("bashls")
+        vim.lsp.enable("biome")
+        vim.lsp.enable("basedpyright")
+        vim.lsp.enable("dockerls")
+        vim.lsp.enable("gitlab_ci_ls")
+        vim.lsp.enable("gopls")
+        vim.lsp.enable("harper_ls")
+        vim.lsp.enable("lua_ls")
+        vim.lsp.enable("marksman")
+        vim.lsp.enable("nil_ls")
+        vim.lsp.enable("rust_analyzer")
+        vim.lsp.enable("systemd_ls")
 
         -- configure diagnostics
         vim.diagnostic.config({
@@ -95,38 +94,38 @@ return {
         -- configure servers
 
         -- make lua_ls aware of neovims modules
-        vim.lsp.config('lua_ls', {
+        vim.lsp.config("lua_ls", {
             on_init = function(client)
                 if client.workspace_folders then
                     local path = client.workspace_folders[1].name
                     if
-                        path ~= vim.fn.stdpath('config')
-                        and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+                        path ~= vim.fn.stdpath("config")
+                        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
                     then
                         return
                     end
                 end
 
-                client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+                client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
                     runtime = {
-                        version = 'LuaJIT',
+                        version = "LuaJIT",
                         path = {
-                            'lua/?.lua',
-                            'lua/?/init.lua',
+                            "lua/?.lua",
+                            "lua/?/init.lua",
                         },
                     },
                     -- Make the server aware of Neovim runtime files
                     workspace = {
                         checkThirdParty = false,
                         library = {
-                            vim.env.VIMRUNTIME
-                        }
-                    }
+                            vim.env.VIMRUNTIME,
+                        },
+                    },
                 })
             end,
             settings = {
-                Lua = {}
-            }
+                Lua = {},
+            },
         })
-    end
+    end,
 }

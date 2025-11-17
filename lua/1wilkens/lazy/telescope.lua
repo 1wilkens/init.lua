@@ -4,8 +4,8 @@ return {
     branch = "0.1.x",
 
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
+        "nvim-lua/plenary.nvim",
+        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     },
 
     config = function()
@@ -26,7 +26,7 @@ return {
 
         -- <C-o> live grep
         vim.keymap.set("n", "<C-o>", function()
-           builtin.live_grep({})
+            builtin.live_grep({})
         end)
 
         -- FIXME: decide if I want any other keybinds here
@@ -43,5 +43,5 @@ return {
         --     builtin.grep_string({ search = vim.fn.input("Grep > ") })
         -- end)
         -- vim.keymap.set("n", "<leader>vh", builtin.help_tags, {})
-    end
+    end,
 }

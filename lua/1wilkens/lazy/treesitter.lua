@@ -1,11 +1,14 @@
 return {
-  'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate',
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
     config = function()
         require("nvim-treesitter.configs").setup({
             -- A list of parser names, or "all"
             ensure_installed = {
-                "vimdoc", "lua", "bash", "python",
+                "vimdoc",
+                "lua",
+                "bash",
+                "python",
             },
 
             -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -16,7 +19,7 @@ return {
             auto_install = false,
 
             indent = {
-                enable = true
+                enable = true,
             },
 
             highlight = {
@@ -30,5 +33,5 @@ return {
                 additional_vim_regex_highlighting = { "markdown" },
             },
         })
-    end
+    end,
 }
