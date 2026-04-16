@@ -52,7 +52,7 @@ return {
         cmp.setup.cmdline(":", {
             mapping = cmp.mapping.preset.cmdline(),
             sources = cmp.config.sources({
-                { name = "buffer" },
+                -- { name = "buffer" },
                 { name = "path" },
             }, {
                 {
@@ -75,8 +75,10 @@ return {
         vim.lsp.enable("lua_ls")
         vim.lsp.enable("marksman")
         vim.lsp.enable("nil_ls")
+        vim.lsp.enable("ruff")
         vim.lsp.enable("rust_analyzer")
         vim.lsp.enable("systemd_ls")
+        vim.lsp.enable("svelte")
 
         -- configure diagnostics
         vim.diagnostic.config({
