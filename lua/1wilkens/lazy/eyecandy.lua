@@ -4,7 +4,7 @@ return {
         "tinted-theming/tinted-nvim",
 
         config = function()
-            require("tinted-colorscheme").setup({
+            require("tinted-nvim").setup({
                 supports = {
                     tinty = true,
                     tinted_shell = true,
@@ -25,9 +25,16 @@ return {
         end,
     },
 
-    -- lightline
-    "itchyny/lightline.vim",
+    -- lualine
+    {
+        "nvim-lualine/lualine.nvim",
+        config = function()
+            require("lualine").setup({
+                options = { theme = "base16" },
+            })
+        end,
+    },
 
     -- devicons
-    "kyazdani42/nvim-web-devicons",
+    "nvim-tree/nvim-web-devicons",
 }
